@@ -31,8 +31,8 @@ MEDIA_ROOT = MEDIA_URL
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False")
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False")
+DEBUG = os.getenv("DEBUG", "False") == "True"
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv(
     "DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,fuellytics-env.eba-sekegxjv.us-west-2.elasticbeanstalk.com").split(",")
@@ -114,16 +114,28 @@ CORS_ALLOW_CREDENTIALS = True
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME', 'fuellytics'),
-        'USER': os.getenv('DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'postgres'),
-        'HOST': "127.0.0.1",
-        'PORT': "5432",
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.getenv['RDS_DB_NAME'],
+            'USER': os.getenv['RDS_USERNAME'],
+            'PASSWORD': os.getenv['RDS_PASSWORD'],
+            'HOST': os.getenv['RDS_HOSTNAME'],
+            'PORT': os.getenv['RDS_PORT'],
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.getenv('DATABASE_NAME', 'fuellytics'),
+            'USER': os.getenv('DATABASE_USER', 'postgres'),
+            'PASSWORD': os.getenv('DATABASE_PASSWORD', 'postgres'),
+            'HOST': "127.0.0.1",
+            'PORT': "5432",
+        }
+    }
 
 
 # Password validation
