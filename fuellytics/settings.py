@@ -35,7 +35,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv(
-    "DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,fuellytics-dev.us-west-2.elasticbeanstalk.com,172.31.19.21").split(",")
+    "DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,fuellytics-env.eba-sekegxjv.us-west-2.elasticbeanstalk.com,172.31.19.21").split(",")
 
 
 # Application definition
