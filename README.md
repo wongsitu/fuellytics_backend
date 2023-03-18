@@ -1,7 +1,26 @@
 # ENGO-651 final project
 
-## How to run the project
-First make sure you have a DB setup with ```NAME = fuellytics```, ```USER = postgres``` and ```PASSWORD = postgres``` You can see the db settings in the settings.py
+## Project setup
+Run the following commands in your terminal:
+
+```terminal
+  python -m venv .env
+```
+
+Activate (.env) environment
+
+```terminal
+  source .env/bin/active
+```
+
+Install dependencies
+
+```terminal
+  pip install -r requirements.txt
+```
+
+Then create a postgres database with the name `fuellytics`. The default settings are listed below and you can
+in find these in the fuellytics/settings.py file. 
 
 ```python
 DATABASES = {
@@ -16,21 +35,22 @@ DATABASES = {
 }
 ```
 
-Then in your terminal run
+Alternatively, you can use other values for `DATABASE_NAME`, `DATABASE_USER` and `DATABASE_PASSWORD` 
+by creating a `.env` file inside the fuellytics directory. For example:
 
-```terminal
-  python -m venv .env
-  source .env/bin/active
-  pip install -r requirements.txt
+```
+DATABASE_NAME=mydatabase
+ADMIN_USERNAME=myusername
+ADMIN_PASSWORD=mypassword
 ```
 
-To start the DB
+Then to start the DB
 
 ```
 sudo service postgresql start
 ```
 
-Then run migrations
+To run migrations:
 
 ```
 python manage.py migrate
