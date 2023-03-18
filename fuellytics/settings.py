@@ -34,8 +34,26 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 DEBUG = os.getenv("DEBUG", "False") == "True"
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
+import requests
+
+
+def get_ec2_instance_ip():
+    """
+    Try to obtain the IP address of the current EC2 instance in AWS
+    """
+    try:
+        ip = requests.get(
+            'http://169.254.169.254/latest/meta-data/local-ipv4',
+            timeout=0.01
+        ).text
+    except requests.exceptions.ConnectionError:
+        return None
+    return ip
+
+AWS_LOCAL_IP = get_ec2_instance_ip()
+
 ALLOWED_HOSTS = os.getenv(
-    "DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,fuellytics-dev.us-west-2.elasticbeanstalk.com,172.31.19.21").split(",")
+    "DJANGO_ALLOWED_HOSTS", f'127.0.0.1,localhost,fuellytics-dev.us-west-2.elasticbeanstalk.com,{AWS_LOCAL_IP}').split(",")
 
 
 # Application definition
