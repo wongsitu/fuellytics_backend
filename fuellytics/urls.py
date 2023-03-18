@@ -7,10 +7,11 @@ from django.conf.urls.static import static
 router = routers.DefaultRouter()
 
 urlpatterns = [
+    path('health-check/', include('health_check.urls')),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/accounts/', include('accounts.urls')),
-    path('api-auth', include('rest_framework.urls'))
+    path('api-auth', include('rest_framework.urls')),
 ]
 
 if settings.DEBUG:
