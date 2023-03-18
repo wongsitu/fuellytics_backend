@@ -17,6 +17,7 @@ import os
 import sys
 import environ
 import dj_database_url
+import requests
 
 load_dotenv()
 
@@ -34,8 +35,21 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 DEBUG = os.getenv("DEBUG", "False") == "True"
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
+try:
+    IMDSv2_TOKEN = requests.put('http://169.254.169.254/latest/api/token', headers={
+        'X-aws-ec2-metadata-token-ttl-seconds': '3600'
+    }).text
+    EC2_PRIVATE_IP = requests.get('http://169.254.169.254/latest/meta-data/local-ipv4', timeout=0.01, headers={
+        'X-aws-ec2-metadata-token': IMDSv2_TOKEN
+    }).text
+except requests.exceptions.RequestException:
+    EC2_PRIVATE_IP = None
+
 ALLOWED_HOSTS = os.getenv(
     "DJANGO_ALLOWED_HOSTS", '127.0.0.1,localhost,fuellytics-dev.us-west-2.elasticbeanstalk.com').split(",")
+    
+if EC2_PRIVATE_IP:
+    ALLOWED_HOSTS.append(EC2_PRIVATE_IP)
 
 # Application definition
 
