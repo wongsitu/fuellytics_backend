@@ -14,6 +14,10 @@ jobs:
     - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*'
 
+    - name: Get timestamp
+      uses: gerred/actions/current-time@master
+      id: current-time
+
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v20
       with:
@@ -21,6 +25,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: fuellytics
         environment_name: fuellytics-dev
-        version_label: ${{ python.versioning() }}
+        version_label: ${{ steps.current-time.outputs.time }}
         region: "us-west-2"
         deployment_package: deploy.zip
