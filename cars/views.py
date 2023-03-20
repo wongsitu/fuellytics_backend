@@ -1,17 +1,17 @@
-from books.models import Book
+from cars.models import Car
 from rest_framework import viewsets, filters
-from books.serializers import CarSerializer
+from cars.serializers import CarSerializer
 from django_filters.rest_framework import DjangoFilterBackend
-from books.filters import CarFilter
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
+
 
 class Cars(viewsets.ReadOnlyModelViewSet):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = CarSerializer
-    
-    queryset = Book.objects.all()
+
+    queryset = Car.objects.all()
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    search_fields = ['isbn', 'title', 'author', 'year']
-    filter_class = CarFilter
+    search_fields = ['make', 'model',
+                     'displacement', 'year', 'is_supercharged', 'drag']

@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
+from cars import views as CarsViews
 from django.conf import settings
 from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
+router.register('cars', CarsViews.Cars, basename='cars')
 
 urlpatterns = [
     path('health-check/', include('health_check.urls')),
@@ -15,4 +17,5 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
