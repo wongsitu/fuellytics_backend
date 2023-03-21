@@ -2,11 +2,17 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from cars import views as CarsViews
+from user_profiles import views as UserProfilesViews
+from car_profiles import views as CarProfilesViews
 from django.conf import settings
 from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register('cars', CarsViews.Cars, basename='cars')
+router.register('profiles', UserProfilesViews.UserProfiles,
+                basename='profiles')
+router.register('car_profiles', CarProfilesViews.CarProfiles,
+                basename='car_profiles')
 
 urlpatterns = [
     path('health-check/', include('health_check.urls')),
