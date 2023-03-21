@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'storages',
     'accounts',
     'user_profiles',
+    'car_profiles',
     'health_check',
     'cars',
 ]
