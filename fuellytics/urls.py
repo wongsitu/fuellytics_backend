@@ -9,8 +9,8 @@ from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register('cars', CarsViews.Cars, basename='cars')
-router.register('profiles', UserProfilesViews.UserProfiles,
-                basename='profiles')
+router.register('users', UserProfilesViews.UserProfiles,
+                basename='users')
 router.register('car_profiles', CarProfilesViews.CarProfiles,
                 basename='car_profiles')
 

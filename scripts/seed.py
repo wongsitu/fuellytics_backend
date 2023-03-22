@@ -2,6 +2,7 @@ from cars.models import Car
 import requests
 import csv
 
+# python manage.py runscript seed
 # https://towardsdatascience.com/use-python-scripts-to-insert-csv-data-into-django-databases-72eee7c6a433
 def run():
     Car.objects.all().delete()
