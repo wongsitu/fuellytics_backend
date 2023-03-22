@@ -12,5 +12,5 @@ class CarProfile(models.Model):
     image_url = models.ImageField(
         upload_to='car_profiles', blank=True, name="image_url")
 
-    def __format__(self):
-        return self.car
+    def __str__(self):
+        return f'''{self.car.model} by {self.user.username}'''

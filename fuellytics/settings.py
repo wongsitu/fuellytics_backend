@@ -103,7 +103,8 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
-    ]
+    ],
+    'COERCE_DECIMAL_TO_STRING': False,
 }
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
