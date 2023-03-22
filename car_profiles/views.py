@@ -11,7 +11,7 @@ from django.forms.models import model_to_dict
 
 
 class CarProfiles(viewsets.ModelViewSet):
-    queryset = CarProfile.objects.all()
+    queryset = CarProfile.objects.all().order_by('id')
     serializer_class = CarProfileSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['user__email', 'user__firstname',

@@ -4,15 +4,18 @@ from rest_framework import routers
 from cars import views as CarsViews
 from user_profiles import views as UserProfilesViews
 from car_profiles import views as CarProfilesViews
+from trips import views as TripViews
 from django.conf import settings
 from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register('cars', CarsViews.Cars, basename='cars')
-router.register('profiles', UserProfilesViews.UserProfiles,
-                basename='profiles')
+router.register('users', UserProfilesViews.UserProfiles,
+                basename='users')
 router.register('car_profiles', CarProfilesViews.CarProfiles,
                 basename='car_profiles')
+router.register('trips', TripViews.Trips,
+                basename='trips')
 
 urlpatterns = [
     path('health-check/', include('health_check.urls')),
