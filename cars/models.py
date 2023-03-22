@@ -11,6 +11,6 @@ class Car(models.Model):
     drag = models.DecimalField(blank=False, decimal_places=6, max_digits=10)
     image_url = models.ImageField(
         upload_to='cars', blank=True, name="image_url")
-
-    def __format__(self):
+        
+    def __str__(self):
         return self.model
