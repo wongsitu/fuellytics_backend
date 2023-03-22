@@ -10,8 +10,7 @@ class Cars(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = CarSerializer
-
-    queryset = Car.objects.all()
+    queryset = Car.objects.all().order_by('id')
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['make', 'model',
                      'displacement', 'year', 'is_supercharged', 'drag']

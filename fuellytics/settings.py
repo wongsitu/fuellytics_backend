@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'car_profiles',
     'health_check',
     'cars',
+    'trips',
 ]
 
 MIDDLEWARE = [

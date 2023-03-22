@@ -10,5 +10,5 @@ class Trips(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = TripSerializer
-    queryset = Trip.objects.all()
+    queryset = Trip.objects.all().order_by('id')
     filter_backends = [DjangoFilterBackend]
