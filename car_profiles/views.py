@@ -1,4 +1,6 @@
-from .models import CarProfile
+from car_profiles.models import CarProfile
+from cars.models import Car
+from car_profiles.forms import CarProfileForm
 
 from rest_framework import viewsets, filters
 from car_profiles.serializers import CarProfileSerializer
@@ -19,3 +21,17 @@ class CarProfiles(viewsets.ModelViewSet):
                      'car__year', 'car__displacement', 'car__drag']
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def create(self, request):
+        car_form = CarProfileForm(request.data, request.FILES)
+
+        if car_form.is_valid():
+            new_car_profile = car_form.save(commit=False)
+            car_id = request.data.get('car_id')
+            car = Car.objects.get(id=car_id)
+            new_car_profile.user = request.user
+            new_car_profile.car = car
+            new_car_profile.save()
+            return Response({'success': True, 'data': model_to_dict(new_car_profile)})
+        else:
+            return Response({'success': False, 'errors': car_form.errors})

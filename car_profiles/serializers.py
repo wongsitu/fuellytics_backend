@@ -1,8 +1,9 @@
 from car_profiles.models import CarProfile
+from user_profiles.models import UserProfile
 from cars.models import Car
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from accounts.serializers import UserSerializer
+from user_profiles.serializers import UserProfileSerializer
 from cars.serializers import CarSerializer
 
 class CarProfileSerializer(serializers.ModelSerializer):
@@ -11,8 +12,8 @@ class CarProfileSerializer(serializers.ModelSerializer):
     car = serializers.SerializerMethodField()
 
     def get_user(self, profile):
-        user = User.objects.get(id=profile.user.id)
-        serializer = UserSerializer(instance=user)
+        user = UserProfile.objects.get(user__id=profile.user.id)
+        serializer = UserProfileSerializer(instance=user)
         return serializer.data
 
     def get_car(self, profile):
@@ -22,4 +23,4 @@ class CarProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CarProfile
-        fields = ['id', 'user', 'car', 'image_url']
+        fields = ('id', 'user', 'car', 'image_url')
