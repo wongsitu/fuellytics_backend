@@ -1,6 +1,6 @@
 from car_profiles.models import CarProfile
 from cars.models import Car
-from car_profiles.forms import CarForm
+from car_profiles.forms import CarProfileForm
 
 from rest_framework import viewsets, filters
 from car_profiles.serializers import CarProfileSerializer
@@ -23,7 +23,7 @@ class CarProfiles(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self, request):
-        car_form = CarForm(data=request.data)
+        car_form = CarProfileForm(request.data, request.FILES)
 
         if car_form.is_valid():
             new_car_profile = car_form.save(commit=False)
@@ -31,12 +31,6 @@ class CarProfiles(viewsets.ModelViewSet):
             car = Car.objects.get(id=car_id)
             new_car_profile.user = request.user
             new_car_profile.car = car
-
-            if request.FILES:
-                image_file = request.FILES['image_url']
-                new_car_profile.image_url = SimpleUploadedFile(
-                    image_file.name, image_file.read(), content_type=image_file.content_type)
-
             new_car_profile.save()
             return Response({'success': True, 'data': model_to_dict(new_car_profile)})
         else:
