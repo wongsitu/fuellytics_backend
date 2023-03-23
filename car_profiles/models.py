@@ -10,7 +10,7 @@ class CarProfile(models.Model):
     car = models.ForeignKey(
         Car, on_delete=models.CASCADE, related_name='car')
     image_url = models.ImageField(
-        upload_to='car_profiles', blank=True, name="image_url")
+        upload_to='car_profiles', blank=True, null=True)
 
     def __str__(self):
         return f'''{self.car.model} by {self.user.username}'''
