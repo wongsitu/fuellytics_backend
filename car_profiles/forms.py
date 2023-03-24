@@ -7,4 +7,4 @@ class CarProfileForm(forms.ModelForm):
 
     class Meta():
         model = CarProfile
-        fields = ('car_id', 'image_url')
+        fields = ['car_id']
