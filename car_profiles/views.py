@@ -9,7 +9,6 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from django.forms.models import model_to_dict
 
 
 class CarProfiles(viewsets.ModelViewSet):
@@ -23,15 +22,19 @@ class CarProfiles(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self, request):
-        car_form = CarProfileForm(request.data, request.FILES)
+        car_profile_form = CarProfileForm(data=request.data)
 
-        if car_form.is_valid():
-            new_car_profile = car_form.save(commit=False)
+        if car_profile_form.is_valid():
+            new_car_profile = car_profile_form.save(commit=False)
             car_id = request.data.get('car_id')
             car = Car.objects.get(id=car_id)
             new_car_profile.user = request.user
             new_car_profile.car = car
+
+            if 'image_url' in request.FILES:
+                new_car_profile.image_url = request.FILES['image_url']
+
             new_car_profile.save()
-            return Response({'success': True, 'data': model_to_dict(new_car_profile)})
+            return Response({'success': True, 'data': CarProfileSerializer(new_car_profile).data })
         else:
-            return Response({'success': False, 'errors': car_form.errors})
+            return Response({'success': False, 'errors': car_profile_form.errors})
