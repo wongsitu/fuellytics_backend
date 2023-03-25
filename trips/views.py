@@ -6,6 +6,8 @@ from car_profiles.forms import CarProfile
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
+
 
 class Trips(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
@@ -25,6 +27,6 @@ class Trips(viewsets.ModelViewSet):
             new_trip.car_profile = car_profile
             new_trip.save()
 
-            return Response({'success': True, 'data': TripSerializer(new_trip).data })
+            return Response({'success': True, 'data': TripSerializer(new_trip).data})
         else:
             return Response({'success': False, 'errors': trip_form.errors})
