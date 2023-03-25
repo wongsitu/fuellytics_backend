@@ -41,9 +41,8 @@ class CarProfiles(viewsets.ModelViewSet):
         else:
             return Response({'success': False, 'errors': car_profile_form.errors})
 
-    def delete(self, request, format=None):
-        car_profile_id = request.data.get('car_profile_id')
-        car_profile = get_object_or_404(CarProfile, id=car_profile_id)
+    def delete(self, request, pk=None):
+        car_profile = get_object_or_404(CarProfile, id=pk)
         car_profile.delete()
 
         return Response({'success': True, 'data': CarProfileSerializer(car_profile).data})
