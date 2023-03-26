@@ -1,3 +1,7 @@
+'''
+Live implementations of an sos filter and a moving average
+'''
+
 import numpy as np
 from collections import deque
 
