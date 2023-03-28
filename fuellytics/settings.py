@@ -63,7 +63,6 @@ if EC2_PRIVATE_IP:
 ASGI_APPLICATION = "fuellytics.asgi.application"
 
 INSTALLED_APPS = [
-    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,7 +81,6 @@ INSTALLED_APPS = [
     'health_check',
     'cars',
     'trips',
-    'mechanization',
 ]
 
 MIDDLEWARE = [
