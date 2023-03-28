@@ -9,6 +9,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 
 class CarProfiles(viewsets.ModelViewSet):
@@ -22,18 +23,25 @@ class CarProfiles(viewsets.ModelViewSet):
 
     def create(self, request):
         car_profile_form = CarProfileForm(data=request.data)
+        user = self.request.user
 
         if car_profile_form.is_valid():
             new_car_profile = car_profile_form.save(commit=False)
             car_id = request.data.get('car_id')
-            car = Car.objects.get(id=car_id)
-            new_car_profile.user = request.user
+            car = get_object_or_404(Car, id=car_id)
+            new_car_profile.user = user
             new_car_profile.car = car
 
             if 'image_url' in request.FILES:
                 new_car_profile.image_url = request.FILES['image_url']
 
             new_car_profile.save()
-            return Response({'success': True, 'data': CarProfileSerializer(new_car_profile).data })
+            return Response({'success': True, 'data': CarProfileSerializer(new_car_profile).data})
         else:
             return Response({'success': False, 'errors': car_profile_form.errors})
+
+    def delete(self, request, pk=None):
+        car_profile = get_object_or_404(CarProfile, id=pk)
+        car_profile.delete()
+
+        return Response({'success': True, 'data': CarProfileSerializer(car_profile).data})
