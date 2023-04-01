@@ -1,6 +1,7 @@
 from car_profiles.models import CarProfile
 from cars.models import Car
 from car_profiles.forms import CarProfileForm
+from car_profiles.filters import CarProfileFilter
 
 from rest_framework import viewsets, filters
 from car_profiles.serializers import CarProfileSerializer
@@ -16,9 +17,11 @@ class CarProfiles(viewsets.ModelViewSet):
     queryset = CarProfile.objects.all().order_by('id')
     serializer_class = CarProfileSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    search_fields = ['user__email', 'user__username', 'car__make', 'car__model', 'car__year']
+    search_fields = ['user__email', 'user__username',
+                     'car__make', 'car__model', 'car__year']
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
+    filter_class = CarProfileFilter
 
     def create(self, request):
         car_profile_form = CarProfileForm(data=request.data)
