@@ -20,6 +20,7 @@ route_coordinates_schema = {
     }
 }
 
+
 class RouteCoordinatesListField(forms.Field):
     default_error_messages = {
         'invalid': 'Invalid JSON format.',
@@ -65,7 +66,13 @@ class TripsForm(forms.ModelForm):
     )
     started_at = forms.CharField(required=True)
     ended_at = forms.CharField(required=True)
+    started_at = forms.CharField(required=True)
+    ended_at = forms.CharField(required=True)
+    fuel_consumption = forms.DecimalField(required=True)
+    average_speed = forms.DecimalField(required=True)
+    co2_emissions = forms.DecimalField(required=True)
 
     class Meta():
         model = Trip
-        fields = ['car_profile_id', 'route_coordinates', 'ended_at', 'started_at']
+        fields = ['car_profile_id', 'route_coordinates',
+                  'ended_at', 'started_at', 'fuel_consumption', 'average_speed', 'co2_emissions']
