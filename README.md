@@ -1,4 +1,7 @@
-# ENGO-651 final project
+# Fuellytics Backend Repository
+
+## Description
+This repository contains the backend code for the Fuellytics application, written in Python using [Django](https://www.djangoproject.com).  To access the frontend repository, click [here](https://github.com/adamreidsmith/fuellytics).  The backend communicates with an AWS Lambda function via the WebSocket protocol to compute navigation and fuel consumption information. To access the repository containing the associated code, click [here](https://github.com/wongsitu/imu-mechanization-websocket).
 
 ## Project setup
 Run the following commands in your terminal:
