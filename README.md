@@ -64,4 +64,5 @@ Finally, to run the project:
 ```
 python manage.py runserver
 ```
-
+---
+Made with :heart: by Chavisa Sornsakul, Wai Ka Wong Situ, and Adam Smith.
